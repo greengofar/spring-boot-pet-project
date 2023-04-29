@@ -1,0 +1,35 @@
+spring:
+  mvc:
+    format:
+      date: iso
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: pass
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    properties.hibernate:
+      hbm2ddl.auto: update
+      show_sql: true
+      format_sql: true
+    hibernate.naming.physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+    open-in-view: false
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 760027825806-8k3rnqjg7aucno9v0hmkk7d5qcg2k6sl.apps.googleusercontent.com
+            client-secret: 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
+            redirectUri: http://localhost:8080/login/oauth2/code/google
+            scope: openid, email, profile
+
+  messages:
+    basename: messages
+
+app.image.bucket: C:\Users\37529\IdeaProjects\Nichiporuk\val-val\images
+
+
+
+

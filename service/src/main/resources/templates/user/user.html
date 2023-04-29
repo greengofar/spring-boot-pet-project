@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+</head>
+<body>
+<div th:insert="~{fragment::header}"></div>
+<form th:action="@{/users/{userId}/update(userId=${user.id})}" enctype="multipart/form-data" method="post" th:object="${user}">
+    <label for="userName">Username:
+        <input id="userName" type="text" name="userName" th:value="*{userName}">
+    </label><br>
+    <label for="firstName">FirstName:
+        <input id="firstName" type="text" name="firstName" th:value="*{firstName}">
+    </label><br>
+    <label for="lastName">LastName:
+        <input id="lastName" type="text" name="lastName" th:value="*{lastName}">
+    </label><br>
+    <label for="email">Email:
+        <input id="email" type="text" name="email" th:value="*{email}">
+    </label><br>
+    <label for="phone">Phone:
+        <input id="phone" type="text" name="phone" th:value="*{phone}">
+    </label><br>
+    <div th:if="${user.image}">
+        <img th:src="@{/api/v1/users/{userId}/avatar(userId=${user.id})}" alt="User image">
+    </div>
+    <label for="image">Image:
+        <input id="image" type="file" name="image">
+    </label><br>
+    <button type="submit">Update</button>
+</form>
+<form th:action="@{/users/{userId}/delete(userId=${user.id})}" method="post">
+    <button type="submit">Remove</button>
+</form>
+</body>
+</html>
