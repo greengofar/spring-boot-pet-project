@@ -40,14 +40,7 @@ public class UserRestController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    /*@GetMapping(value = "/{id}/avatar", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    public byte[] findAvatar (@PathVariable("id") Integer id){
-        return userService.findAvatar(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-    } */
-
-
-    @GetMapping(value = "/{id}/avatar", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @GetMapping(value = "/{id}/avatar")
     public ResponseEntity<byte[]> findAvatar(@PathVariable("id") Integer id) {
         return userService.findAvatar(id)
                 .map(content -> ResponseEntity.ok()
@@ -68,14 +61,6 @@ public class UserRestController {
         return userService.update(id, userDto)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
-
-   /* @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    private void delete(@PathVariable("id") Integer id) {
-        if (!userService.delete(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-    }*/
 
     @DeleteMapping("/{id}")
     private ResponseEntity<?> delete(@PathVariable("id") Integer id) {

@@ -13,6 +13,5 @@ public class ProductFilter {
     String productName;
     BigDecimal priceMin;
     BigDecimal priceMax;
-
     Category category;
 }

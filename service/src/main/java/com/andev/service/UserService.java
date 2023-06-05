@@ -1,5 +1,6 @@
 package com.andev.service;
 
+import com.andev.dao.QPredicate;
 import com.andev.dao.UserRepository;
 import com.andev.dto.UserCreateEditDto;
 import com.andev.dto.UserFilter;
@@ -7,8 +8,11 @@ import com.andev.dto.UserReadDto;
 import com.andev.entity.User;
 import com.andev.mapper.UserCreateEditMapper;
 import com.andev.mapper.UserReadMapper;
+import com.querydsl.core.types.Predicate;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,6 +26,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static com.andev.entity.QUser.user;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -33,10 +39,14 @@ public class UserService implements UserDetailsService {
     private final ImageService imageService;
 
 
-    public List<UserReadDto> findAll(UserFilter filter) {
-        return userRepository.findAllByFilter(filter).stream()
-                .map(userReadMapper::map)
-                .toList();
+    public Page<UserReadDto> findAll(UserFilter filter, Pageable pageable) {
+        Predicate predicate = QPredicate.builder()
+                .add(filter.userName(), user.userName::containsIgnoreCase)
+                .add(filter.firstName(), user.firstName::containsIgnoreCase)
+                .add(filter.lastName(), user.lastName::containsIgnoreCase)
+                .buildAnd();
+        return userRepository.findAll(predicate, pageable)
+                .map(userReadMapper::map);
     }
 
     public List<UserReadDto> findAll() {
@@ -50,7 +60,7 @@ public class UserService implements UserDetailsService {
                 .map(userReadMapper::map);
     }
 
-    public Optional<byte[]> findAvatar(Integer id){
+    public Optional<byte[]> findAvatar(Integer id) {
         return userRepository.findById(id)
                 .map(User::getImage)
                 .filter(StringUtils::hasText)
@@ -107,6 +117,6 @@ public class UserService implements UserDetailsService {
                         user.getPassword(),
                         Collections.singleton(user.getRole())
                 ))
-                .orElseThrow(()-> new UsernameNotFoundException("Failed to retrieve user: "+username));
+                .orElseThrow(() -> new UsernameNotFoundException("Failed to retrieve user: " + username));
     }
 }

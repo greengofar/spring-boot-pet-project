@@ -1,4 +1,4 @@
-package com.andev.integration.controller;
+package com.andev.integration.http.controller;
 
 import com.andev.integration.IntegrationTestBase;
 import lombok.RequiredArgsConstructor;
@@ -46,5 +46,4 @@ class UserControllerIT extends IntegrationTestBase {
                         redirectedUrlPattern("/users/{\\d+}")
                 );
     }
-
 }

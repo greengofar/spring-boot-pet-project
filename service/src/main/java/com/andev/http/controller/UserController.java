@@ -1,11 +1,15 @@
 package com.andev.http.controller;
 
+import com.andev.dto.PageResponse;
 import com.andev.dto.UserCreateEditDto;
+import com.andev.dto.UserFilter;
 import com.andev.dto.UserReadDto;
 import com.andev.service.UserService;
 import com.andev.validation.group.CreateAction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +24,6 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.groups.Default;
-import java.util.List;
 
 @Slf4j
 @Controller
@@ -31,9 +34,10 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public String findAll(Model model) {
-        List<UserReadDto> all = userService.findAll();
-        model.addAttribute("users", all);
+    public String findAll(Model model, UserFilter filter, Pageable pageable) {
+        Page<UserReadDto> page = userService.findAll(filter, pageable);
+        model.addAttribute("users", PageResponse.of(page));
+        model.addAttribute("filter", filter);
         return "user/users";
     }
 
@@ -54,7 +58,6 @@ public class UserController {
     }
 
     @PostMapping
-    //@ResponseStatus(HttpStatus.CREATED)
     public String create(@ModelAttribute @Validated({Default.class, CreateAction.class}) UserCreateEditDto user,
                          BindingResult bindingResult,
                          RedirectAttributes redirectAttributes) {
@@ -67,7 +70,6 @@ public class UserController {
         return "redirect:/login";
     }
 
-    //    @PutMapping("/{id}")
     @PostMapping("/{id}/update")
     public String update(@PathVariable("id") Integer id, @ModelAttribute @Validated UserCreateEditDto userDto) {
         return userService.update(id, userDto)
@@ -75,7 +77,6 @@ public class UserController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    //    @DeleteMapping("/{id}")
     @PostMapping("/{id}/delete")
     private String delete(@PathVariable("id") Integer id) {
         if (!userService.delete(id)) {

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+</head>
+<body>
+<form action="/products">
+
+    <label for="category">Category:
+        <select id="category" name="category">
+            <option value="">ALL</option>
+            <option th:each="category:${categories}"
+                    th:value="${category}"
+                    th:selected="${category==filter.category}"
+                    th:text="${category}">Category
+            </option>
+        </select>
+    </label>
+
+    <label for="productName">Product:
+        <input id="productName" type="text" name="productName" th:value="${filter.productName}">
+    </label>
+
+    <label for="manufacturerName">Manufacturer:
+        <input id="manufacturerName" type="text" name="manufacturerName" th:value="${filter.manufacturerName}">
+    </label>
+
+    <label for="priceMin">Price from:
+        <input id="priceMin" type="number" name="priceMin" th:value="${filter.priceMin}">
+    </label>
+
+    <label for="priceMax">Price to:
+        <input id="priceMax" type="number" name="priceMax" th:value="${filter.priceMax}">
+    </label>
+
+    <div>
+        <label for="page">Page:
+            <input id="page" type="number" name="page" th:value="${products.metadata.page}">
+        </label>
+        <label for="size">Size:
+            <input id="size" type="number" name="size" th:value="${products.metadata.size}">
+        </label>
+    </div>
+
+    <button type="submit">Filter</button>
+
+</form>
+<br>
+
+<form action="/products/registration">
+    <button type="submit">Register a new product</button>
+</form>
+<br>
+
+<div th:each="product: ${products.content}">
+    <a th:href="@{'/products/'+${product.id}}"
+       th:text="|
+       ${product.name}---
+       ${product.model}---
+       ${#strings.toLowerCase(product.category)}---
+       ${product.price}
+       |">product</a>
+</div>
+
+</body>
+</html>

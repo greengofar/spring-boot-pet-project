@@ -44,7 +44,7 @@ public class UserCreateEditMapper implements Mapper<UserCreateEditDto, User> {
 
         Optional.ofNullable(object.getImage())
                 .filter(not(MultipartFile::isEmpty))
-                .ifPresent(image->user.setImage(image.getOriginalFilename()));
+                .ifPresent(image -> user.setImage(image.getOriginalFilename()));
 
         Optional.ofNullable(object.getRawPassword())
                 .filter(StringUtils::hasText)

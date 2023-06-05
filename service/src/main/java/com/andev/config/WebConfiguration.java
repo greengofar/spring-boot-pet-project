@@ -19,17 +19,16 @@ public class WebConfiguration implements WebMvcConfigurer {
     }
 
     @Bean
-    public LocaleResolver localeResolver(){
+    public LocaleResolver localeResolver() {
         CookieLocaleResolver resolver = new CookieLocaleResolver();
         resolver.setDefaultLocale(Locale.US);
         return resolver;
-
     }
+
     @Bean
-    LocaleChangeInterceptor localeChangeInterceptor(){
+    LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
         interceptor.setParamName("lang");
         return interceptor;
     }
-
 }

@@ -13,7 +13,6 @@ import java.util.List;
 
 @Value
 public class OrderReadDto {
-
     Integer id;
     LocalDate dateOrder;
     LocalDate dateClosing;

@@ -30,9 +30,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 // .csrf().disable()
                 .authorizeHttpRequests(urlConfig -> urlConfig
-                        .antMatchers("/login", "/users/registration", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
-                        // .antMatchers("/users/{\\d+}/delete").hasAuthority(ADMIN.getAuthority())
-                        .antMatchers("/admin/**").hasAuthority(ADMIN.getAuthority())
+                        .antMatchers("/login", "/users/**", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
+                        .antMatchers("/users/{\\d+}/delete").hasAuthority(ADMIN.getAuthority())
+                        .antMatchers("/admin/**", "/products/**").hasAuthority(ADMIN.getAuthority())
                         .anyRequest().authenticated()
                 )
                 .logout(logout -> logout
@@ -52,7 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private OAuth2UserService<OidcUserRequest, OidcUser> oidcUserService() {
         return userRequest -> {
             String email = userRequest.getIdToken().getClaim("email");
-            // TODO: 09.04.2023 create user userStrvice.create
+            // TODO: 09.04.2023 create user userService.create
             UserDetails userDetails = userService.loadUserByUsername(email);
             DefaultOidcUser oidcUser = new DefaultOidcUser(userDetails.getAuthorities(), userRequest.getIdToken());
 

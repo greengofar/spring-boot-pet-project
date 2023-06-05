@@ -20,17 +20,17 @@ public class ImageService {
     private final String bucket;
 
     @SneakyThrows
-    public void upload(String imagePath, InputStream content){
+    public void upload(String imagePath, InputStream content) {
         Path fullImagePath = Path.of(bucket, imagePath);
 
-        try (content){
+        try (content) {
             Files.createDirectories(fullImagePath.getParent());
-            Files.write(fullImagePath,content.readAllBytes(), CREATE, TRUNCATE_EXISTING);
+            Files.write(fullImagePath, content.readAllBytes(), CREATE, TRUNCATE_EXISTING);
         }
     }
 
     @SneakyThrows
-    public Optional<byte[]> get(String imagePath){
+    public Optional<byte[]> get(String imagePath) {
         Path fullImagePath = Path.of(bucket, imagePath);
 
         return Files.exists(fullImagePath)

@@ -27,7 +27,6 @@ public class ProductFilterRepositoryImpl implements ProductFilterRepository {
 
     @Override
     public List<Product> findProductByFilter_querydsl(ProductFilter filter) {
-
         Predicate predicate = QPredicate.builder()
                 .add(filter.getProductName(), product.name::eq)
                 .add(filter.getManufacturerName(), manufacturer.name::eq)

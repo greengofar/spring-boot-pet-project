@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Product</title>
+</head>
+<body>
+<form th:action="@{/products/{productId}/update(productId=${product.id})}" method="post">
+    <label for="name">Product name:
+        <input id="name" type="text" name="name" th:value="${product.name}">
+    </label><br>
+    <label for="model">Model:
+        <input id="model" type="text" name="model" th:value="${product.model}">
+    </label><br>
+    <label for="description">Description:
+        <input id="description" type="text" name="description" th:value="${product.description}">
+    </label><br>
+    <label for="price">Price:
+        <input id="price" type="number" name="price" th:value="${product.price}">
+    </label><br>
+    <label for="amount">Amount:
+        <input id="amount" type="number" name="amount" th:value="${product.amount}">
+    </label><br>
+    <div th:each="category: ${categories}">
+        <input th:id="${category}" type="radio" name="category" th:value="${category}"
+               th:checked="${category==product.category}">
+        <label th:for="${category}" th:text="${category}">Category:</label>
+    </div>
+    <div>
+        <label for="manufacturer">Manufacturer:
+            <select id="manufacturer" name="manufacturerId">
+                <option th:each="manufacturer:${manufacturers}"
+                        th:selected="${manufacturer.id()==product.manufacturer.id()}"
+                        th:value="${manufacturer.id()}"
+                        th:text="${manufacturer.name()}">Manufacturer
+                </option>
+            </select>
+        </label>
+    </div>
+    <button type="submit">Update</button>
+</form>
+<br>
+<form th:action="@{/products/{productId}/delete(productId=${product.id})}" method="post">
+    <button type="submit">Remove</button>
+</form>
+</body>
+</html>

@@ -17,16 +17,14 @@ public class CriteriaPredicate {
         return new CriteriaPredicate();
     }
 
-    public <T> CriteriaPredicate add(T object, Function<T, Predicate> function){
-        if(object !=null){
+    public <T> CriteriaPredicate add(T object, Function<T, Predicate> function) {
+        if (object != null) {
             predicates.add(function.apply(object));
         }
         return this;
     }
 
-    public List<Predicate> getPredicates(){
+    public List<Predicate> getPredicates() {
         return predicates;
     }
-
-
 }
