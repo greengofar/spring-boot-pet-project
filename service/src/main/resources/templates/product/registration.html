@@ -5,7 +5,7 @@
     <title>Product registration</title>
 </head>
 <body>
-<form th:action="@{/products}" method="post">
+<form th:action="@{/products}" enctype="multipart/form-data" method="post">
     <label for="name">Product name:
         <input id="name" type="text" name="name" th:value="${product.name}">
     </label><br>
@@ -36,7 +36,10 @@
                 </option>
             </select>
         </label>
-    </div>
+    </div><br>
+    <label for="imageName">Image:
+        <input id="imageName" type="file" name="image">
+    </label><br>
     <button type="submit">Rigister</button>
 </form>
 <div th:if="${errors}">

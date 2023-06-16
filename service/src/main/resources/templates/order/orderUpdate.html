@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update order</title>
+</head>
+<body>
+<form th:action="@{/orders/{orderId}/update(orderId=${order.get().id})}" method="post">
+    <p>Date of opening the order: <span th:text="${order.get().dateOrder}"></span></p>
+
+    <label for="dateClosing">Date of closing the order:
+        <input id="dateClosing" type="date" name="dateClosing" th:value="${order.get().dateClosing}">
+    </label><br>
+
+    <p>Description: <span
+            th:text="|${order.get().product.name}.  ${order.get().product.model}.  ${order.get().product.manufacturer.name()}|"></span>
+    </p>
+
+    <label for="amount">Amount:
+        <input id="amount" type="number" name="amount" th:value="${order.get().amount}">
+    </label><br>
+
+    <label for="userId">UserId:
+        <input id="userId" type="number" name="userId" th:value="${param.userId}">
+    </label><br>
+
+    <p>Address of order: <span th:text="${order.get().userAddress}"></span></p>
+
+    <label for="productId">ProductId:
+        <input id="productId" type="number" name="productId" th:value="${param.productId}">
+    </label><br>
+
+    <div>
+        <label for="status">Status:
+            <select id="status" name="status">
+                <option th:each="status:${statuses}"
+                        th:selected="${status.name()==order.get().status.name()}"
+                        th:value="${status}"
+                        th:text="${status}">Status
+                </option>
+            </select>
+        </label>
+    </div>
+    <br>
+    <button type="submit">Update</button>
+</form>
+</body>
+</html>

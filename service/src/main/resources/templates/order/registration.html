@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order</title>
+</head>
+<body>
+<form th:action="@{/orders}" method="post">
+    <label for="userId">UserId:
+        <input id="userId" type="number" name="userId" th:value="${order.userId}">
+    </label><br>
+    <label for="productId">
+        <input id="productId" type="hidden" name="productId" th:value="${param.productId}">
+    </label><br>
+    <label for="amount">Amount:
+        <input id="amount" type="number" name="amount" th:value="${order.amount}">
+    </label><br>
+    <div th:each="payment: ${payments}">
+        <input th:id="${payment}" type="radio" name="payment" th:value="${payment}"
+               th:checked="${payment==order.payment}">
+        <label th:for="${payment}" th:text="${payment}">Payment:</label>
+    </div>
+    <label for="town">Town:
+        <input id="town" type="text" name="town" th:value="${order.town}">
+    </label><br>
+    <label for="street">Street:
+        <input id="street" type="text" name="street" th:value="${order.street}">
+    </label><br>
+    <label for="houseNumber">Number of the house:
+        <input id="houseNumber" type="number" name="houseNumber" th:value="${order.houseNumber}">
+    </label><br>
+    <label for="apartmentNumber">Number of the apartment:
+        <input id="apartmentNumber" type="number" name="apartmentNumber"
+               th:value="${order.apartmentNumber}">
+    </label><br>
+    <label for="postalCode">Postal code:
+        <input id="postalCode" type="number" name="postalCode" th:value="${order.postalCode}">
+    </label><br>
+    <button type="submit">Submit order</button>
+    <div th:if="${errors}">
+        <p th:each="error:${errors}" th:text="${error.defaultMessage}" style="color: red">Error message</p>
+    </div>
+</form>
+</body>
+</html>

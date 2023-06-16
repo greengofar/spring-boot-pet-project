@@ -73,7 +73,7 @@ public class ProductController {
     }
 
     @PostMapping("/{id}/update")
-    public String update(@PathVariable("id") Integer id, @ModelAttribute ProductCreateEditDto product) {
+    public String update(@PathVariable("id") Integer id, @ModelAttribute @Validated ProductCreateEditDto product) {
         return productService.update(id, product)
                 .map(it -> "redirect:/products/{id}")
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));

@@ -14,7 +14,7 @@ import java.util.*;
 @EqualsAndHashCode(exclude = {"orders", "manufacturer"})
 @Builder
 @Entity
-public class Product implements BaseEntity<Integer>{
+public class Product implements BaseEntity<Integer> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -25,13 +25,10 @@ public class Product implements BaseEntity<Integer>{
     private String description;
     private BigDecimal price;
     private Integer amount;
+    private String imageName;
 
     @Builder.Default
-    @ManyToMany
-    @JoinTable(
-            name = "product_order",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "order_id"))
+    @OneToMany(mappedBy = "product")
     private List<Order> orders = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -40,6 +37,6 @@ public class Product implements BaseEntity<Integer>{
 
     public void addOrder(Order order) {
         orders.add(order);
-        order.getProducts().add(this);
+        order.setProduct(this);
     }
 }

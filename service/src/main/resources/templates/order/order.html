@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order</title>
+</head>
+<body>
+<p>Date of opening the order: <span th:text="${order.dateOrder}"></span></p>
+<p>Date of closing the order: <span th:text="${order.dateClosing}"></span></p>
+<p>Status of the order: <span th:text="${order.status}"></span></p>
+<p>Description: <span th:text="|${order.product.name}.  ${order.product.model}.  ${order.product.manufacturer.name()}|"></span></p>
+<p>Price $: <span th:text="${order.product.price}"></span></p>
+<p>Amount: <span th:text="${order.amount}"></span></p>
+<p>Total value $: <span th:text="${order.product.price}*${order.amount}"></span></p>
+<br>
+<form th:action="@{/orders/{orderId}/delete(orderId=${order.id})}" method="post">
+    <button type="submit">Delete order</button>
+</form>
+</body>
+</html>

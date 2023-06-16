@@ -15,4 +15,5 @@ public class ProductReadDto {
     BigDecimal price;
     Integer amount;
     ManufacturerReadDto manufacturer;
+    String imageName;
 }

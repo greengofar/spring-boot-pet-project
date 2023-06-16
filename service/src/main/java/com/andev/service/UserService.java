@@ -36,7 +36,7 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final UserReadMapper userReadMapper;
     private final UserCreateEditMapper userCreateEditMapper;
-    private final ImageService imageService;
+    private final UserImageService userImageService;
 
 
     public Page<UserReadDto> findAll(UserFilter filter, Pageable pageable) {
@@ -64,7 +64,7 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(id)
                 .map(User::getImage)
                 .filter(StringUtils::hasText)
-                .flatMap(imageService::get);
+                .flatMap(userImageService::get);
     }
 
     @Transactional
@@ -82,7 +82,7 @@ public class UserService implements UserDetailsService {
     @SneakyThrows
     private void uploadImage(MultipartFile image) {
         if (!image.isEmpty()) {
-            imageService.upload(image.getOriginalFilename(), image.getInputStream());
+            userImageService.upload(image.getOriginalFilename(), image.getInputStream());
         }
     }
 

@@ -15,23 +15,24 @@ import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 
 @Service
 @RequiredArgsConstructor
-public class ImageService {
-    @Value(value = "${app.image.bucket}")
+public class ProductImageService {
+
+    @Value(value = "${app.product.image.bucket}")
     private final String bucket;
 
     @SneakyThrows
-    public void upload(String imagePath, InputStream content) {
-        Path fullImagePath = Path.of(bucket, imagePath);
+    public void uploadImage(String imageName, InputStream content){
+        Path fullImagePath = Path.of(bucket, imageName);
 
-        try (content) {
+        try(content){
             Files.createDirectories(fullImagePath.getParent());
-            Files.write(fullImagePath, content.readAllBytes(), CREATE, TRUNCATE_EXISTING);
+            Files.write(fullImagePath,content.readAllBytes(), CREATE, TRUNCATE_EXISTING);
         }
     }
 
     @SneakyThrows
-    public Optional<byte[]> get(String imagePath) {
-        Path fullImagePath = Path.of(bucket, imagePath);
+    public Optional<byte[]> getImage(String imageName){
+        Path fullImagePath = Path.of(bucket, imageName);
 
         return Files.exists(fullImagePath)
                 ? Optional.of(Files.readAllBytes(fullImagePath))

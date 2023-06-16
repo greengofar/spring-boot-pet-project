@@ -18,6 +18,7 @@ public class ProductReadMapper implements Mapper<Product, ProductReadDto> {
         ManufacturerReadDto manufacturerReadDto = Optional.ofNullable(object.getManufacturer())
                 .map(manufacturerReadMapper::map)
                 .orElse(null);
+
         return new ProductReadDto(
                 object.getId(),
                 object.getName(),
@@ -26,7 +27,8 @@ public class ProductReadMapper implements Mapper<Product, ProductReadDto> {
                 object.getDescription(),
                 object.getPrice(),
                 object.getAmount(),
-                manufacturerReadDto
+                manufacturerReadDto,
+                object.getImageName()
         );
     }
 }

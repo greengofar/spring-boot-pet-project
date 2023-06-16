@@ -28,7 +28,10 @@ spring:
   messages:
     basename: messages
 
-app.image.bucket: C:\Users\37529\IdeaProjects\Nichiporuk\val-val\images
+app.user.image.bucket: C:\Users\37529\IdeaProjects\Nichiporuk\val-val\images\avatar
+app.product.image.bucket: C:\Users\37529\IdeaProjects\Nichiporuk\val-val\images\product
+
+
 
 
 

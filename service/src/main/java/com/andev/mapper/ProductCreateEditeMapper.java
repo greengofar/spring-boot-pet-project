@@ -6,8 +6,11 @@ import com.andev.entity.Manufacturer;
 import com.andev.entity.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
+
+import static java.util.function.Predicate.not;
 
 @Component
 @RequiredArgsConstructor
@@ -36,6 +39,10 @@ public class ProductCreateEditeMapper implements Mapper<ProductCreateEditDto, Pr
         product.setPrice(object.getPrice());
         product.setAmount(object.getAmount());
         product.setManufacturer(getManufacturer(object.getManufacturerId()));
+
+        Optional.ofNullable(object.getImage())
+                .filter(not(MultipartFile::isEmpty))
+                .ifPresent(image -> product.setImageName(image.getOriginalFilename()));
     }
 
     private Manufacturer getManufacturer(Integer ManufacturerId) {

@@ -38,7 +38,6 @@ public class User implements BaseEntity<Integer>{
     private String lastName;
     private String email;
     private String phone;
-
     private String image;
     @Enumerated(EnumType.STRING)
     private Role role;

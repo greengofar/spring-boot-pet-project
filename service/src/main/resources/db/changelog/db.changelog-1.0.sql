@@ -14,24 +14,6 @@ CREATE TABLE users
 --rollback DROP TABLE users;
 
 --changeset andev:2
-CREATE TABLE orders
-(
-    id               SERIAL PRIMARY KEY,
-    date_order       DATE NOT NULL,
-    date_closing     DATE,
-    total_value      INT,
-    payment          VARCHAR(16),
-    status           VARCHAR(64),
-    town             VARCHAR(32),
-    street           VARCHAR(32),
-    house_number     INT,
-    apartment_number INT,
-    postal_code      INT,
-    user_id          INT REFERENCES users (id) ON DELETE CASCADE
-);
---rollback DROP TABLE orders;
-
---changeset andev:3
 CREATE TABLE manufacturer
 (
     id          SERIAL PRIMARY KEY,
@@ -40,7 +22,7 @@ CREATE TABLE manufacturer
 );
 --rollback DROP TABLE manufacturer;
 
---changeset andev:4
+--changeset andev:3
 CREATE TABLE product
 (
     id              SERIAL PRIMARY KEY,
@@ -54,11 +36,21 @@ CREATE TABLE product
 );
 --rollback DROP TABLE product;
 
---changeset andev:5
-CREATE TABLE product_order
+--changeset andev:4
+CREATE TABLE orders
 (
-    product_id INT REFERENCES product (id) ON DELETE CASCADE,
-    order_id   INT REFERENCES orders (id) ON DELETE CASCADE,
-    PRIMARY KEY (product_id, order_id)
+    id               SERIAL PRIMARY KEY,
+    date_order       DATE NOT NULL,
+    date_closing     DATE,
+    amount           INT,
+    payment          VARCHAR(16),
+    status           VARCHAR(64),
+    town             VARCHAR(32),
+    street           VARCHAR(32),
+    house_number     INT,
+    apartment_number INT,
+    postal_code      INT,
+    user_id          INT REFERENCES users (id) ON DELETE CASCADE,
+    product_id       INT REFERENCES product (id)
 );
---rollback DROP TABLE product_order;
+--rollback DROP TABLE orders;
