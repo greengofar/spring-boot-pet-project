@@ -40,7 +40,7 @@ public class OrderCreateEditMapper implements Mapper<OrderCreateEditDto, Order> 
         order.setPayment(object.getPayment());
         order.setStatus(Status.NEW);
         order.setUserAddress(getAddress(object));
-        order.setUser(getUser(object.getUserId()));
+        order.setUser(getUser(object.getUsername()));
         order.setProduct(getProduct(object.getProductId()));
     }
 
@@ -60,9 +60,9 @@ public class OrderCreateEditMapper implements Mapper<OrderCreateEditDto, Order> 
                 .orElseThrow();
     }
 
-    private User getUser(Integer id) {
-        return Optional.ofNullable(id)
-                .flatMap(userRepository::findById)
+    private User getUser(String username) {
+        return Optional.ofNullable(username)
+                .flatMap(userRepository::findByUserName)
                 .orElseThrow();
     }
 }

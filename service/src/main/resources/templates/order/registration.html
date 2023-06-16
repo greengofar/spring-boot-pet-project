@@ -6,8 +6,8 @@
 </head>
 <body>
 <form th:action="@{/orders}" method="post">
-    <label for="userId">UserId:
-        <input id="userId" type="number" name="userId" th:value="${order.userId}">
+    <label for="username">
+        <input id="username" type="hidden" name="username" th:value="${param.username}">
     </label><br>
     <label for="productId">
         <input id="productId" type="hidden" name="productId" th:value="${param.productId}">

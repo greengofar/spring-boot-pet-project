@@ -29,7 +29,7 @@ public class OrderReadMapper implements Mapper<Order, OrderReadDto> {
                 object.getUserAddress(),
                 object.getPayment(),
                 object.getStatus(),
-                object.getUser().getId()
+                object.getUser().getUserName()
         );
     }
 }

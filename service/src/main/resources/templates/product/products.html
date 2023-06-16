@@ -5,6 +5,7 @@
     <title>Products</title>
 </head>
 <body>
+<div th:insert="~{fragment::header}"></div>
 <form action="/products">
 
     <label for="category">Category:
@@ -48,9 +49,11 @@
 </form>
 <br>
 
-<form action="/products/registration">
-    <button type="submit">Register a new product</button>
-</form>
+<div th:if="${#authentication.authorities[0].authority=='ADMIN'}">
+    <form action="/products/registration">
+        <button type="submit">Register a new product</button>
+    </form>
+</div>
 <br>
 
 <div th:each="product: ${products.content}">

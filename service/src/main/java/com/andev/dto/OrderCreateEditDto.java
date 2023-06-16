@@ -10,7 +10,7 @@ import javax.validation.constraints.Positive;
 
 @Value
 public class OrderCreateEditDto {
-    Integer userId;
+    String username;
 
     @Positive
     Integer productId;

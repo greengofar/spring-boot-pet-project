@@ -30,9 +30,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 // .csrf().disable()
                 .authorizeHttpRequests(urlConfig -> urlConfig
-                        .antMatchers("/login", "/users/**", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
+                        .antMatchers("/login", "/products/**", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
                         .antMatchers("/users/{\\d+}/delete").hasAuthority(ADMIN.getAuthority())
-                        .antMatchers("/admin/**", "/products/**").hasAuthority(ADMIN.getAuthority())
+                        .antMatchers("/admin/**", "/users/**").hasAuthority(ADMIN.getAuthority())
                         .anyRequest().authenticated()
                 )
                 .logout(logout -> logout
@@ -41,10 +41,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         .deleteCookies("JSESSIONID"))
                 .formLogin(login -> login
                         .loginPage("/login")
-                        .defaultSuccessUrl("/users"))
+                        .defaultSuccessUrl("/products"))
                 .oauth2Login(config -> config
                         .loginPage("/login")
-                        .defaultSuccessUrl("/users")
+                        .defaultSuccessUrl("/products")
                         .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig.oidcUserService(oidcUserService()))
                 );
     }

@@ -17,5 +17,5 @@ public class OrderReadDto {
     UserAddress userAddress;
     Payment payment;
     Status status;
-    Integer userId;
+    String username;
 }
