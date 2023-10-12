@@ -6,7 +6,7 @@
 </head>
 <body>
 <div th:insert="~{fragment::header}"></div>
-<form th:action="@{/users/{userId}/update(userId=${user.id})}" enctype="multipart/form-data" method="post" th:object="${user}">
+<form th:action="@{/users/one/{userId}/update(userId=${user.id})}" enctype="multipart/form-data" method="post" th:object="${user}">
     <label for="userName">Username:
         <input id="userName" type="text" name="userName" th:value="*{userName}">
     </label><br>
@@ -30,7 +30,7 @@
     </label><br>
     <button type="submit">Update</button>
 </form>
-<form th:action="@{/users/{userId}/delete(userId=${user.id})}" method="post">
+<form th:action="@{/users/one/{userId}/delete(userId=${user.id})}" method="post">
     <button type="submit">Remove</button>
 </form>
 </body>

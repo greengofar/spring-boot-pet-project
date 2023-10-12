@@ -24,7 +24,6 @@
 
     <modules>
         <module>service</module>
-        <module>common</module>
     </modules>
 
     <dependencyManagement>

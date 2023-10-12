@@ -8,6 +8,7 @@ import com.andev.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.mock.web.MockMultipartFile;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -47,7 +48,8 @@ class ProductServiceIT extends IntegrationTestBase {
                 "test description",
                 BigDecimal.ONE,
                 Integer.valueOf(1000),
-                MANUFACTURER_1
+                MANUFACTURER_1,
+                new MockMultipartFile("test", new byte[0])
         );
         ProductReadDto actualResult = productService.create(productDto);
         assertEquals(productDto.getName(), actualResult.getName());
@@ -68,7 +70,8 @@ class ProductServiceIT extends IntegrationTestBase {
                 "test description",
                 BigDecimal.ONE,
                 Integer.valueOf(1000),
-                MANUFACTURER_1
+                MANUFACTURER_1,
+                new MockMultipartFile("test", new byte[0])
         );
         Optional<ProductReadDto> actualResult = productService.update(PRODUCT_1, productDto);
         assertThat(actualResult.isPresent());

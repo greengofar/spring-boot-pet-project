@@ -2,6 +2,7 @@ package com.andev.http.controller;
 
 import com.andev.dto.OrderCreateEditDto;
 import com.andev.entity.enums.Payment;
+import com.andev.entity.enums.Status;
 import com.andev.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -36,6 +37,7 @@ public class OrderController {
                 .map(order -> {
                     model.addAttribute("order", order);
                     model.addAttribute("payments", Payment.values());
+                    model.addAttribute("statuses", Status.values());
                     return "order/order";
                 })
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -60,6 +62,14 @@ public class OrderController {
         return "redirect:/orders/" + orderService.create(order).getId();
     }
 
+    @GetMapping("/{id}/update")
+    public String formForUpdate(@PathVariable Integer id, Model model) {
+        model.addAttribute("order", orderService.findByID(id));
+        model.addAttribute("payments", Payment.values());
+        model.addAttribute("statuses", Status.values());
+        return "order/orderUpdate";
+    }
+
     @PostMapping("/{id}/update")
     public String update(@PathVariable Integer id, @ModelAttribute @Validated OrderCreateEditDto orderDto) {
         return orderService.update(id, orderDto)
@@ -68,7 +78,7 @@ public class OrderController {
     }
 
     @PostMapping("/{id}/delete")
-    public String update(@PathVariable Integer id) {
+    public String delete(@PathVariable Integer id) {
         if (!orderService.delete(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }

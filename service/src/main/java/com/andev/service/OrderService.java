@@ -42,15 +42,15 @@ public class OrderService {
     }
 
     @Transactional
-    public Optional<OrderReadDto> update(Integer id, OrderCreateEditDto dto){
+    public Optional<OrderReadDto> update(Integer id, OrderCreateEditDto dto) {
         return orderRepository.findById(id)
-                .map(entity -> orderCreateEditMapper.map(dto,entity))
+                .map(entity -> orderCreateEditMapper.map(dto, entity))
                 .map(orderRepository::saveAndFlush)
                 .map(orderReadMapper::map);
     }
 
     @Transactional
-    public boolean delete(Integer id){
+    public boolean delete(Integer id) {
         return orderRepository.findById(id)
                 .map(entity -> {
                     orderRepository.delete(entity);

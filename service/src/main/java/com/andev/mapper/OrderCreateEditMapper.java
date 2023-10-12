@@ -23,18 +23,21 @@ public class OrderCreateEditMapper implements Mapper<OrderCreateEditDto, Order> 
 
     @Override
     public Order map(OrderCreateEditDto fromObject, Order toObject) {
-        copy(fromObject, toObject);
+        toObject.setDateOrder(fromObject.getDateOrder());
+        toObject.setDateClosing(fromObject.getDateClosing());
+        toObject.setAmount(fromObject.getAmount());
+        toObject.setPayment(fromObject.getPayment());
+        toObject.setStatus(fromObject.getStatus());
+        toObject.setUserAddress(getAddress(fromObject));
+        toObject.setUser(getUser(fromObject.getUsername()));
+        toObject.setProduct(getProduct(fromObject.getProductId()));
+        toObject.setDateClosing(fromObject.getDateClosing());
         return toObject;
     }
 
     @Override
     public Order map(OrderCreateEditDto object) {
         Order order = new Order();
-        copy(object, order);
-        return order;
-    }
-
-    private void copy(OrderCreateEditDto object, Order order) {
         order.setDateOrder(LocalDate.now());
         order.setAmount(object.getAmount());
         order.setPayment(object.getPayment());
@@ -42,7 +45,19 @@ public class OrderCreateEditMapper implements Mapper<OrderCreateEditDto, Order> 
         order.setUserAddress(getAddress(object));
         order.setUser(getUser(object.getUsername()));
         order.setProduct(getProduct(object.getProductId()));
+        return order;
     }
+
+    /*private void copy(OrderCreateEditDto object, Order order) {
+        order.setDateOrder(LocalDate.now());
+        order.setAmount(object.getAmount());
+        order.setPayment(object.getPayment());
+        order.setStatus(Status.NEW);
+        order.setUserAddress(getAddress(object));
+        order.setUser(getUser(object.getUsername()));
+        order.setProduct(getProduct(object.getProductId()));
+        order.setDateClosing(object.getDateClosing());
+    }*/
 
     private static UserAddress getAddress(OrderCreateEditDto object) {
         return UserAddress.builder()

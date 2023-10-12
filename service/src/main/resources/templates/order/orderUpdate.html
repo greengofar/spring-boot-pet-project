@@ -6,42 +6,68 @@
 </head>
 <body>
 <form th:action="@{/orders/{orderId}/update(orderId=${order.get().id})}" method="post">
-    <p>Date of opening the order: <span th:text="${order.get().dateOrder}"></span></p>
-
-    <label for="dateClosing">Date of closing the order:
-        <input id="dateClosing" type="date" name="dateClosing" th:value="${order.get().dateClosing}">
+    <label for="username">username:
+        <input id="username" type="text" name="username" th:value="${order.get().username}">
     </label><br>
-
+    <label for="productId">productId:
+        <input id="productId" type="number" name="productId" th:value="${order.get().product.id}">
+    </label><br>
     <p>Description: <span
             th:text="|${order.get().product.name}.  ${order.get().product.model}.  ${order.get().product.manufacturer.name()}|"></span>
     </p>
+    <label for="dateOrder">dateOrder
+        <input id="dateOrder" type="date" name="dateOrder" th:value="${order.get().dateOrder}">
+    </label>
+
+    <p>Price $: <span th:text="${order.get().product.price}"></span></p>
 
     <label for="amount">Amount:
         <input id="amount" type="number" name="amount" th:value="${order.get().amount}">
     </label><br>
 
-    <label for="userId">UserId:
-        <input id="userId" type="number" name="userId" th:value="${param.userId}">
-    </label><br>
+    <p>Total value $: <span th:text="${order.get().product.price}*${order.get().amount}"></span></p>
 
-    <p>Address of order: <span th:text="${order.get().userAddress}"></span></p>
-
-    <label for="productId">ProductId:
-        <input id="productId" type="number" name="productId" th:value="${param.productId}">
-    </label><br>
-
-    <div>
-        <label for="status">Status:
-            <select id="status" name="status">
-                <option th:each="status:${statuses}"
-                        th:selected="${status.name()==order.get().status.name()}"
-                        th:value="${status}"
-                        th:text="${status}">Status
-                </option>
-            </select>
-        </label>
+    <div th:each="payment: ${payments}">
+        <input th:id="${payment}" type="radio" name="payment" th:value="${payment}"
+               th:checked="${payment==order.get().payment}">
+        <label th:for="${payment}" th:text="${payment}">Payment:</label>
     </div>
-    <br>
+
+    <label for="town">Town:
+        <input id="town" type="text" name="town" th:value="${order.get().userAddress.town}">
+    </label><br>
+
+    <label for="street">Street:
+        <input id="street" type="text" name="street" th:value="${order.get().userAddress.street}">
+    </label><br>
+
+    <label for="houseNumber">Number of the house:
+        <input id="houseNumber" type="number" name="houseNumber" th:value="${order.get().userAddress.houseNumber}">
+    </label><br>
+
+    <label for="apartmentNumber">Number of the apartment:
+        <input id="apartmentNumber" type="number" name="apartmentNumber"
+               th:value="${order.get().userAddress.apartmentNumber}">
+    </label><br>
+
+    <label for="postalCode">Postal code:
+        <input id="postalCode" type="number" name="postalCode" th:value="${order.get().userAddress.postalCode}">
+    </label><br>
+
+    <label for="status">status:
+        <select id="status" name="status">
+            <option th:each="status:${statuses}"
+                    th:selected="${status==order.get().status}"
+                    th:value="${status}"
+                    th:text="${status}">Status
+            </option>
+        </select>
+    </label><br>
+
+    <label for="dateClosing">Date of closing the order:
+        <input id="dateClosing" type="date" name="dateClosing" th:value="${order.get().dateClosing}">
+    </label><br>
+
     <button type="submit">Update</button>
 </form>
 </body>

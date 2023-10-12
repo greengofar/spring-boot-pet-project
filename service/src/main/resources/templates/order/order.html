@@ -13,8 +13,13 @@
 <p>Amount: <span th:text="${order.amount}"></span></p>
 <p>Total value $: <span th:text="${order.product.price}*${order.amount}"></span></p>
 <br>
+<form th:action="@{/orders/{orderId}/update(orderId=${order.id})}" method="get">
+    <button type="submit">Update order</button>
+</form>
+<br>
 <form th:action="@{/orders/{orderId}/delete(orderId=${order.id})}" method="post">
     <button type="submit">Delete order</button>
 </form>
+
 </body>
 </html>

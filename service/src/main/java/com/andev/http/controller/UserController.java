@@ -33,7 +33,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping
+    @GetMapping("/all")
     public String findAll(Model model, UserFilter filter, Pageable pageable) {
         Page<UserReadDto> page = userService.findAll(filter, pageable);
         model.addAttribute("users", PageResponse.of(page));
@@ -41,7 +41,7 @@ public class UserController {
         return "user/users";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/one/{id}")
     public String findById(@PathVariable("id") Integer id, Model model) {
         return userService.findById(id)
                 .map(userReadDto -> {
@@ -70,18 +70,18 @@ public class UserController {
         return "redirect:/login";
     }
 
-    @PostMapping("/{id}/update")
+    @PostMapping("/one/{id}/update")
     public String update(@PathVariable("id") Integer id, @ModelAttribute @Validated UserCreateEditDto userDto) {
         return userService.update(id, userDto)
-                .map(it -> "redirect:/users/{id}")
+                .map(it -> "redirect:/users/one/{id}")
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping("/{id}/delete")
+    @PostMapping("/one/{id}/delete")
     private String delete(@PathVariable("id") Integer id) {
         if (!userService.delete(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return "redirect:/users";
+        return "redirect:/users/all";
     }
 }

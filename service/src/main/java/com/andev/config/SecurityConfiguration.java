@@ -30,9 +30,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 // .csrf().disable()
                 .authorizeHttpRequests(urlConfig -> urlConfig
-                        .antMatchers("/login", "/products/**", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
-                        .antMatchers("/users/{\\d+}/delete").hasAuthority(ADMIN.getAuthority())
-                        .antMatchers("/admin/**", "/users/**").hasAuthority(ADMIN.getAuthority())
+                        .antMatchers("/orders/**").hasAuthority(ADMIN.getAuthority())
+                        .antMatchers("/users/all","/users/one/{\\d+}","/users/{\\d+}/delete").hasAuthority(ADMIN.getAuthority())
+                        .antMatchers("/login", "/users/**","/products/**","/v3/api-docs/**", "/swagger-ui/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .logout(logout -> logout
